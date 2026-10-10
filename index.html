@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tạo Mixins & Biến Để Tối Ưu CSS | SASS Practice</title>
+  <!-- Liên kết đến file CSS được biên dịch từ SCSS -->
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Bổ sung một số style phụ trợ cho giao diện trực quan */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f8fafc;
+      margin: 0;
+      padding: 40px 20px;
+      color: #334155;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .description {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #64748b;
+      margin-bottom: 30px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin: 28px 0;
+    }
+    .card h3 {
+      margin-top: 8px;
+      margin-bottom: 12px;
+      color: #1e293b;
+    }
+    .card p {
+      color: #64748b;
+      line-height: 1.6;
+      margin: 10px 0 20px;
+      font-size: 14px;
+    }
+    .button {
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    .badge {
+      display: inline-block;
+      background: #fee2e2;
+      color: #dc2626;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .info-section {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      margin-top: 36px;
+    }
+    .code-block {
+      background: #0f172a;
+      color: #38bdf8;
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-top: 12px;
+      overflow-x: auto;
+    }
+    .code-block .comment {
+      color: #94a3b8;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Áp dụng h1 từ base/_typography.scss ($font-large: 32px, $text-color: #222) -->
+    <h1>[Thực hành] Tạo mixins & biến để tối ưu CSS của website mẫu</h1>
+    
+    <!-- Áp dụng h2 từ base/_typography.scss ($font-medium: 28px, $text-color: #222) -->
+    <h2>Kiến trúc SASS mô-đun hóa với Variables & Mixins</h2>
+
+    <p class="description">
+      Dự án này chuyển đổi đoạn mã CSS tĩnh thành kiến trúc SASS có cấu trúc phân tầng rõ ràng (Abstracts, Base, Components), 
+      sử dụng <strong>biến (Variables)</strong> để quản trị thiết kế tập trung và <strong>mixins</strong> để tái sử dụng mã hiệu quả.
+    </p>
+
+    <div class="grid">
+
+      <!-- Card 1: Sử dụng class .card (từ components/_cards.scss áp dụng @include box-style) -->
+      <div class="card">
+        <span class="badge">Component Card</span>
+        <h3>Sản Phẩm Trực Tuyến</h3>
+        <p>Thẻ này kế thừa toàn bộ thuộc tính thông qua <code>@include box-style;</code>: màu nền trắng, padding 15px, bo tròn 10px và đổ bóng đồng nhất từ biến <code>$box-shadow-default</code>.</p>
+        <!-- Áp dụng .button (từ components/_buttons.scss áp dụng @include button-style($primary-color)) -->
+        <button class="button">Mua Ngay</button>
+      </div>
+
+      <!-- Card 2: Kế thừa box-style -->
+      <div class="card">
+        <span class="badge">Component Card</span>
+        <h3>Dịch Vụ Hỗ Trợ</h3>
+        <p>Nút bên dưới áp dụng mixin <code>@include button-style($primary-color);</code>, tái sử dụng biến màu <code>$primary-color: red;</code> và padding <code>$padding-standard: 10px 20px;</code>.</p>
+        <button class="button">Đăng Ký Tư Vấn</button>
+      </div>
+
+      <!-- Card 3: Kế thừa box-style -->
+      <div class="card">
+        <span class="badge">Architecture</span>
+        <h3>Tổ Chức File SCSS</h3>
+        <p>Các file được tách biệt theo chuẩn 7-1 pattern thu gọn: <code>abstracts/</code> chứa biến và mixins; <code>base/</code> chứa typography; <code>components/</code> chứa nút và thẻ.</p>
+        <button class="button">Xem Tài Liệu</button>
+      </div>
+
+    </div>
+
+    <!-- Khối tổng kết kiến trúc SCSS -->
+    <div class="info-section">
+      <h3 style="margin-top:0; color:#1e293b;">Cấu trúc file và lệnh Import trong <code>main.scss</code>:</h3>
+      <div class="code-block">
+        <span class="comment">// 1. Abstracts (Biến & Mixin dùng chung)</span><br>
+        @import "abstracts/variables";<br>
+        @import "abstracts/mixins";<br><br>
+        <span class="comment">// 2. Base (Quy tắc nền tảng typography)</span><br>
+        @import "base/typography";<br><br>
+        <span class="comment">// 3. Components (Thành phần giao diện tái sử dụng)</span><br>
+        @import "components/buttons";<br>
+        @import "components/cards";
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>Thực hiện bởi: <strong>dtc245200059-eng</strong> | Bài tập thực hành SASS Mixins & Variables</p>
+    </div>
+
+  </div>
+
+</body>
+</html>

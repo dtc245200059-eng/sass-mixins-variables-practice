@@ -1,0 +1,22 @@
+{
+  "name": "sass-mixins-variables-practice",
+  "version": "1.0.0",
+  "description": "Bài thực hành: Tạo mixins & biến để tối ưu CSS của website mẫu",
+  "main": "main.scss",
+  "scripts": {
+    "build:sass": "sass main.scss styles.css",
+    "watch:sass": "sass --watch main.scss:styles.css"
+  },
+  "keywords": [
+    "sass",
+    "scss",
+    "mixins",
+    "variables",
+    "optimization"
+  ],
+  "author": "dtc245200059-eng",
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.80.0"
+  }
+}

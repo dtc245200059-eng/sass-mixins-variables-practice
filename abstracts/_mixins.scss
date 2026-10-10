@@ -1,0 +1,14 @@
+// abstracts/_mixins.scss
+@mixin button-style($bg-color) {
+  background: $bg-color;
+  color: white;
+  padding: $padding-standard;
+  border-radius: 5px;
+}
+
+@mixin box-style {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: $box-shadow-default;
+}
